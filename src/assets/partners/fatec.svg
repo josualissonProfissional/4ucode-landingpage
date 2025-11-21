@@ -1,0 +1,9 @@
+﻿<svg width="220" height="96" viewBox="0 0 220 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="220" height="96" rx="18" fill="#FFFFFF"/>
+  <g transform="translate(28 20)">
+    <path d="M0 0H21.5L16 6.5H9.5V26H0V0Z" fill="#1A1A1A"/>
+    <path d="M24 0H27.5L36.5 26H27.2L25.3 20.6H15.5L17.4 26H8.3L0 0H9.4L11.4 5.9H21.1L19.2 0H24Z" fill="#D91D30"/>
+    <text x="52" y="24" font-family="'Segoe UI', Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="1" fill="#1A1A1A">FATEC</text>
+    <text x="52" y="40" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#1A1A1A">Faculdade de Tecnologia do Estado de São Paulo</text>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+﻿<svg width="220" height="96" viewBox="0 0 220 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="220" height="96" rx="18" fill="#FFFFFF"/>
+  <g transform="translate(48 18)">
+    <rect x="0" y="18" width="20" height="20" rx="4" fill="#0F7A33"/>
+    <rect x="24" y="18" width="20" height="20" rx="4" fill="#0F7A33"/>
+    <rect x="48" y="18" width="20" height="20" rx="4" fill="#0F7A33"/>
+    <rect x="0" y="42" width="20" height="20" rx="4" fill="#0F7A33"/>
+    <rect x="24" y="42" width="20" height="20" rx="4" fill="#0F7A33"/>
+    <rect x="48" y="42" width="20" height="20" rx="4" fill="#0F7A33"/>
+    <rect x="72" y="42" width="20" height="20" rx="4" fill="#0F7A33"/>
+    <rect x="72" y="18" width="20" height="20" rx="4" fill="#0F7A33"/>
+    <rect x="24" y="-6" width="20" height="20" rx="4" fill="#0F7A33"/>
+    <rect x="48" y="-6" width="20" height="20" rx="4" fill="#0F7A33"/>
+    <rect x="72" y="-6" width="20" height="20" rx="4" fill="#0F7A33"/>
+    <rect x="0" y="-6" width="20" height="20" rx="4" fill="#DA1E32"/>
+  </g>
+  <text x="110" y="78" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="18" font-weight="600" fill="#0F0F0F">
+    Instituto Federal - IFSP
+  </text>
+</svg>
