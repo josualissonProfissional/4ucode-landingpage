@@ -8,8 +8,12 @@ import { MotionProvider } from "@/providers/motion-provider";
 
 const Index = lazy(() => import("./pages/Index"));
 const Cadastro = lazy(() => import("./pages/Cadastro"));
-const Auth = lazy(() => import("./pages/Auth"));
-const Admin = lazy(() => import("./pages/Admin"));
+const Mentoria = lazy(() => import("./pages/Mentoria"));
+const Fabrica = lazy(() => import("./pages/Fabrica"));
+const Consultoria = lazy(() => import("./pages/ConsultoriaTreinamento"));
+const Projetos = lazy(() => import("./pages/Projetos"));
+const Sobre = lazy(() => import("./pages/Sobre"));
+const Contato = lazy(() => import("./pages/Contato"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const RouteFallback = () => (
@@ -23,8 +27,12 @@ const AppRoutes = () => (
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/cadastro" element={<Cadastro />} />
-      <Route path="/auth" element={<Auth />} />
-      <Route path="/admin" element={<Admin />} />
+      <Route path="/mentoria" element={<Mentoria />} />
+      <Route path="/fabrica" element={<Fabrica />} />
+      <Route path="/consultoria" element={<Consultoria />} />
+      <Route path="/projetos" element={<Projetos />} />
+      <Route path="/sobre" element={<Sobre />} />
+      <Route path="/contato" element={<Contato />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>

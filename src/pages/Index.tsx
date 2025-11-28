@@ -14,7 +14,6 @@ import { CTASticky } from "@/components/sections/CTASticky";
 import { SEO } from "@/components/SEO";
 import { RevealSection } from "@/components/RevealSection";
 import { usePersonalization } from "@/hooks/usePersonalization";
-import { AIAssistant } from "@/components/ai/AIAssistant";
 
 const Index = () => {
   const { primarySectionOrder } = usePersonalization();
@@ -75,7 +74,6 @@ const Index = () => {
       </main>
       <Footer />
       <CTASticky />
-      <AIAssistant />
     </div>
   );
 };

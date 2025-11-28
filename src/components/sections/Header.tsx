@@ -1,29 +1,27 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, ShieldCheck, Sparkles, X } from "lucide-react";
+import { Menu, ShieldCheck, Sparkles, X, Home, BotMessageSquare, Factory, Presentation, Briefcase, UsersRound, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { cn } from "@/lib/utils";
 import { floatLoop, hoverGlow, hoverLift } from "@/lib/motion-presets";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const NAV_ITEMS = [
-  { label: "4uCode Mentoria", target: "mentoria" },
-  { label: "Trilhas", target: "trilhas" },
-  { label: "Modelo de Aprendizado", target: "modelo" },
-  { label: "Projetos & Desafios", target: "projetos" },
-  { label: "Comunidade & Parceiros", target: "comunidade" },
-  { label: "FAQ", target: "faq" },
+  { label: "Home", path: "/", icon: Home },
+  { label: "Mentoria AI-First", path: "/mentoria", icon: BotMessageSquare },
+  { label: "Fábrica de Software", path: "/fabrica", icon: Factory },
+  { label: "Consultoria & Treinamento", path: "/consultoria", icon: Presentation },
+  { label: "Projetos Reais", path: "/projetos", icon: Briefcase },
+  { label: "Sobre Nós", path: "/sobre", icon: UsersRound },
+  { label: "Contato", path: "/contato", icon: MessageSquare },
 ];
-
-const scrollToId = (id: string) => {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-};
 
 export const Header = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const activeId = useScrollSpy({ ids: NAV_ITEMS.map((item) => item.target) });
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 24);
@@ -33,72 +31,80 @@ export const Header = () => {
   }, []);
 
   const navContent = useMemo(() => {
-    return NAV_ITEMS.map((item, index) => (
-      <motion.button
-        key={item.target}
-        {...hoverLift}
-        className={cn(
-          "relative px-2.5 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.28em] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
-          activeId === item.target ? "text-white" : "text-white/60 hover:text-white",
-        )}
-        onClick={() => {
-          setOpen(false);
-          scrollToId(item.target);
-        }}
-        onMouseEnter={() => setHoveredId(item.target)}
-        onMouseLeave={() => setHoveredId(null)}
-        onFocus={() => setHoveredId(item.target)}
-        onBlur={() => setHoveredId(null)}
-      >
-        {activeId === item.target && (
-          <motion.span
-            layoutId="nav-active"
-            className="absolute inset-0 rounded-full bg-white/10"
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          />
-        )}
-        <motion.span
-          className="pointer-events-none absolute left-3 right-3 -bottom-0.5 h-[1px] rounded-full bg-white/15"
-          animate={{ opacity: [0.2, 0.5, 0.2], scaleX: [0.8, 1, 0.8] }}
-          transition={{ duration: 3.2, repeat: Infinity, delay: index * 0.2 }}
-          style={{ transformOrigin: "center" }}
-        />
-        <AnimatePresence>
-          {(hoveredId === item.target || activeId === item.target) && (
+    const activePath = location.pathname;
+    return NAV_ITEMS.map((item, index) => {
+      const isActive = activePath === item.path;
+      const Icon = item.icon;
+      return (
+        <motion.button
+          key={item.path}
+          {...hoverLift}
+          className={cn(
+            "relative px-2.5 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.26em] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+            isActive ? "text-white" : "text-white/70 hover:text-white",
+          )}
+          onClick={() => {
+            setOpen(false);
+            navigate(item.path);
+          }}
+          onMouseEnter={() => setHoveredId(item.path)}
+          onMouseLeave={() => setHoveredId(null)}
+          onFocus={() => setHoveredId(item.path)}
+          onBlur={() => setHoveredId(null)}
+        >
+          {isActive && (
             <motion.span
-              key={`${item.target}-underline`}
-              layoutId="nav-underline"
-              className="pointer-events-none absolute left-3 right-3 -bottom-0.5 h-[2px] rounded-full bg-gradient-to-r from-primary via-fuchsia-400 to-primary"
-              initial={{ scaleX: 0.2, opacity: 0 }}
-              animate={{ scaleX: 1, opacity: 1 }}
-              exit={{ scaleX: 0.2, opacity: 0 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              style={{ transformOrigin: "center" }}
+              layoutId="nav-active"
+              className="absolute inset-0 rounded-full bg-white/10"
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
             />
           )}
-        </AnimatePresence>
-        <AnimatePresence>
-          {hoveredId === item.target && (
-            <motion.span
-              key={`${item.target}-spark`}
-              className="pointer-events-none absolute inset-0 overflow-hidden rounded-full"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
+          <motion.span
+            className="pointer-events-none absolute left-3 right-3 -bottom-0.5 h-[1px] rounded-full bg-white/15"
+            animate={{ opacity: [0.2, 0.5, 0.2], scaleX: [0.8, 1, 0.8] }}
+            transition={{ duration: 3.2, repeat: Infinity, delay: index * 0.18 }}
+            style={{ transformOrigin: "center" }}
+          />
+          <AnimatePresence>
+            {(hoveredId === item.path || isActive) && (
               <motion.span
-                className="absolute inset-y-1 left-[-40%] w-1/2 skew-x-[30deg] bg-gradient-to-r from-transparent via-white/60 to-transparent"
-                initial={{ x: -25 }}
-                animate={{ x: 80 }}
-                transition={{ duration: 0.5 }}
+                key={`${item.path}-underline`}
+                layoutId="nav-underline"
+                className="pointer-events-none absolute left-3 right-3 -bottom-0.5 h-[2px] rounded-full bg-gradient-to-r from-primary via-fuchsia-400 to-primary"
+                initial={{ scaleX: 0.2, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                exit={{ scaleX: 0.2, opacity: 0 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                style={{ transformOrigin: "center" }}
               />
-            </motion.span>
-          )}
-        </AnimatePresence>
-        <span className="relative">{item.label}</span>
-      </motion.button>
-    ));
-  }, [activeId, hoveredId]);
+            )}
+          </AnimatePresence>
+          <AnimatePresence>
+            {hoveredId === item.path && (
+              <motion.span
+                key={`${item.path}-spark`}
+                className="pointer-events-none absolute inset-0 overflow-hidden rounded-full"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <motion.span
+                  className="absolute inset-y-1 left-[-40%] w-1/2 skew-x-[30deg] bg-gradient-to-r from-transparent via-white/60 to-transparent"
+                  initial={{ x: -25 }}
+                  animate={{ x: 80 }}
+                  transition={{ duration: 0.5 }}
+                />
+              </motion.span>
+            )}
+          </AnimatePresence>
+          <span className="relative inline-flex items-center gap-2">
+            <Icon className="h-4 w-4" aria-hidden="true" />
+            {item.label}
+          </span>
+        </motion.button>
+      );
+    });
+  }, [hoveredId, location.pathname, navigate]);
 
   return (
     <header
