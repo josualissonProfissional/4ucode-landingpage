@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/hooks/use-toast";
 import { CheckCircle, Loader2 } from "lucide-react";
+import { Header } from "@/components/sections/Header";
 import { SEO } from "@/components/SEO";
 import { z } from "zod";
 import { UF_OPTIONS, UF_NAMES, COMMON_COLLEGES, type UF } from "@/types/user";
@@ -102,11 +103,12 @@ const Cadastro = () => {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-[#060111] via-[#0b0720] to-background">
         <SEO 
           title="Cadastro Realizado - 4uCode"
           description="Seu cadastro foi recebido com sucesso"
         />
+        <Header />
         <Card data-scroll-reveal className="w-full max-w-md text-center">
           <CardHeader>
             <div className="mx-auto w-16 h-16 rounded-full gradient-primary flex items-center justify-center mb-4">
@@ -131,9 +133,15 @@ const Cadastro = () => {
   }
 
   return (
-    <div className="min-h-screen py-12 px-4 flex items-center justify-center" style={{ 
-      background: 'radial-gradient(1200px 600px at 20% -10%, hsl(240 10% 12%) 0%, hsl(240 10% 4%) 60%)'
-    }}>
+    <div className="min-h-screen bg-gradient-to-b from-[#060111] via-[#0b0720] to-background text-white">
+      <SEO 
+        title="Cadastro - 4uCode"
+        description="Cadastre-se para receber mais informa����es sobre o 4uCode"
+      />
+      <Header />
+      <div className="py-12 px-4 flex items-center justify-center" style={{ 
+        background: 'radial-gradient(1200px 600px at 20% -10%, hsl(240 10% 12%) 0%, hsl(240 10% 4%) 60%)'
+      }}>
       <SEO 
         title="Cadastro - 4uCode"
         description="Cadastre-se para receber mais informações sobre o 4uCode"

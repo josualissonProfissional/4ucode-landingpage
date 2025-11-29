@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, HeartHandshake, Sparkles, Users, Waypoints } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Header } from "@/components/sections/Header";
 import { RevealSection } from "@/components/RevealSection";
 import { SEO } from "@/components/SEO";
 
@@ -21,6 +22,7 @@ const Sobre = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#060111] via-[#0b0720] to-background text-white">
       <SEO title="Sobre Nós - 4uCode" description="Saiba mais sobre a história, missão e time da 4uCode." />
+      <Header />
       <main className="container space-y-16 px-4 pb-16 pt-20 md:space-y-24 md:pt-28">
         <header className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <div className="space-y-6">

@@ -137,22 +137,6 @@ export const Header = () => {
           {navContent}
         </motion.nav>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
-            <Sparkles className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
-            Turma Alpha 220
-          </div>
-          <motion.div {...hoverGlow}>
-            <Button
-              size="sm"
-              className="rounded-full border border-white/20 bg-white/90 px-6 text-sm font-semibold text-background transition hover:bg-white"
-              onClick={() => (window.location.href = "/cadastro")}
-            >
-              Quero entrar na mentoria
-            </Button>
-          </motion.div>
-        </div>
-
         <button
           className="md:hidden rounded-full border border-white/15 p-2 text-white transition hover:border-white/40"
           onClick={() => setOpen((prev) => !prev)}
@@ -199,14 +183,6 @@ export const Header = () => {
                 <ShieldCheck className="h-4 w-4 text-primary" />
                 Mais de 800 devs ativos e mentorias semanais
               </div>
-              <motion.div {...hoverGlow}>
-                <Button
-                  className="mt-4 w-full rounded-full border border-white/15 bg-gradient-to-r from-primary via-primary-600 to-primary-700 text-sm font-semibold text-white shadow-[0_12px_45px_rgba(88,36,168,0.45)]"
-                  onClick={() => (window.location.href = "/cadastro")}
-                >
-                  Quero entrar na mentoria
-                </Button>
-              </motion.div>
             </div>
           </motion.div>
         )}

@@ -20,6 +20,12 @@ import heroBg3 from "@/assets/videos/video3.mp4";
 
 type MediaSlide = { type: "video"; src: string; poster: string; caption: string } | { type: "image"; src: string; caption: string };
 
+type StatItem = {
+  label: string;
+  value: string;
+  delay?: number;
+};
+
 type HeroSlide = {
   id: string;
   tag: string;
@@ -28,49 +34,73 @@ type HeroSlide = {
   typedText: string;
   media: MediaSlide;
   backgroundVideo: string;
+  stats: StatItem[];
+  mobileSummary: string;
+  highlight: string;
 };
 
 const heroSlidesData: HeroSlide[] = [
   {
-    id: "mentoria",
-    tag: "Alpha 220",
-    headline: "Sua jornada como dev começa com IA-first",
-    description: "Projetos reais, mentoria humana e tecnologia assistida por IA para acelerar seu portfólio.",
-    typedText: "Mentoria gratuita com squads 24/7 e check-ins ao vivo.",
+    id: "fabrica",
+    tag: "Fábrica de Software",
+    headline: "Transforme sua ideia em código com velocidade",
+    description: "Trabalhe com nossa fábrica de software ágil; squads + IA entregando valor em dias.",
+    typedText: "Acelere o ciclo de entregas com arquitetura sólida e squads híbridas.",
     media: {
       type: "video",
       src: "https://cdn.pixabay.com/video/2024/03/05/201409-902988678_large.mp4",
-      poster: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80",
-      caption: "Mentoria ao vivo com squads Gen Z",
+      poster: "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=800&q=80",
+      caption: "Engrenagens do delivery",
     },
     backgroundVideo: heroBg1,
+    stats: [
+      { label: "+35% mais rápido", value: "ciclo de entrega", delay: 0 },
+      { label: "Squads híbridos", value: "IA + engenharia", delay: 0.3 },
+      { label: "Releases quinzenais", value: "sprints", delay: 0.6 },
+    ],
+    mobileSummary: "Squads IA + engenharia entregando releases curtos para projetos reais.",
+    highlight: "Squads guiados com QA, engenharia e copilotos 24/7.",
   },
   {
-    id: "trilhas",
-    tag: "Trilhas guiadas",
-    headline: "Trilhas pensadas para cada fase da sua carreira",
-    description: "Front, back e carreira com roteiros prontos, desafios mensais e comunidade cobrando seu pull request.",
-    typedText: "Trilhas guiadas com IA copiloto e reviews semanais.",
+    id: "consultoria",
+    tag: "Consultoria & Treinamento",
+    headline: "Consultoria personalizada para times de IA e .NET",
+    description: "Aprenda a combinar IA e engenharia em projetos reais através de treinamentos aplicados.",
+    typedText: "Guiando squads com workshops, playbooks e conhecimento aplicado.",
     media: {
       type: "image",
       src: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=900&q=80",
-      caption: "Projetos em coworking virtual",
+      caption: "Playbooks e gráficos em ação",
     },
     backgroundVideo: heroBg2,
+    stats: [
+      { label: "50+ empresas", value: "treinadas", delay: 0 },
+      { label: "98% NPS", value: "consultorias", delay: 0.3 },
+      { label: "Workshops semanais", value: "hands-on", delay: 0.6 },
+    ],
+    mobileSummary: "Consultoria aplicada com playbooks e gráficos orientando squads.",
+    highlight: "Playbooks e gráficos com especialistas orientando seu time.",
   },
   {
-    id: "comunidade",
-    tag: "Comunidade viva",
-    headline: "Desafios em grupo e networking para nunca estudar só",
-    description: "Pods no Discord + WhatsApp, desafios relâmpago e eventos com Fatec, USP e IFSP abertos para você.",
-    typedText: "Comunidade real + desafios mensais para manter ritmo.",
+    id: "mentoria",
+    tag: "Mentoria AI-First",
+    headline: "Desbloqueie seu potencial com IA e mentores reais",
+    description: "Mentoria apoiada por IA e especialistas para você chegar ao nível de alta performance.",
+    typedText: "Copilotos aprendem você, mentores garantem o progresso e projetos reais validam o aprendizado.",
     media: {
       type: "video",
       src: "https://cdn.pixabay.com/video/2023/08/02/173620-848222861_large.mp4",
-      poster: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=700&q=80",
-      caption: "Reviews em código real com IA copiloto",
+      poster: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=700&q=80",
+      caption: "IA guiando versões",
     },
     backgroundVideo: heroBg3,
+    stats: [
+      { label: "+800 devs ativos", value: "Mentoria AI-First", delay: 0 },
+      { label: "24/7 copiloto IA", value: "assistência", delay: 0.3 },
+      { label: "6 mentorias/semana", value: "sprints", delay: 0.6 },
+    ],
+    mobileSummary: "Mentores + IA copiloto mantendo ritmo e clareza por semana.",
+    highlight: "Copiloto IA e mentores respondendo 24/7 para você permanecer no ritmo.",
   },
 ];
 
@@ -180,6 +210,9 @@ export const Hero = () => {
       : slide,
   );
   const activeBackground = slides[activeSlide]?.backgroundVideo ?? heroBg1;
+  const activeStats = slides[activeSlide]?.stats ?? [];
+  const highlightText = slides[activeSlide]?.highlight ?? "Chat IA disponível 24/7 para tirar dúvidas e guiar seus estudos.";
+  const mobileSummary = slides[activeSlide]?.mobileSummary ?? "+800 devs ativos e mentorias semanais";
 
   const handleScrollToJourney = () => {
     document.getElementById("jornada")?.scrollIntoView({ behavior: "smooth" });
@@ -294,18 +327,14 @@ export const Hero = () => {
                     </AnimatePresence>
 
                     <div className="grid gap-3 sm:grid-cols-2">
-                      {[
-                        { label: "Devs ativos", value: "+800", delay: 0 },
-                        { label: "Mentorias/semana", value: "06", delay: 0.4 },
-                        { label: "Satisfação", value: "95%", delay: 0.8 },
-                      ].map((pill, pillIndex) => (
+                      {activeStats.map((pill, pillIndex) => (
                         <motion.div
                           key={`${slide.id}-pill-${pill.label}`}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.4, delay: 0.1 * pillIndex }}
                         >
-                          <StatPill label={pill.label} value={pill.value} delay={pill.delay} />
+                          <StatPill label={pill.label} value={pill.value} delay={pill.delay ?? pillIndex * 0.18} />
                         </motion.div>
                       ))}
                       <motion.div
@@ -316,7 +345,7 @@ export const Hero = () => {
                         transition={{ duration: 0.4, delay: 0.3 }}
                       >
                         <BotMessageSquare className="h-5 w-5 text-primary" />
-                        Chat IA disponível 24/7 para tirar dúvidas e guiar seus estudos.
+                        {highlightText}
                       </motion.div>
                     </div>
                   </div>
@@ -365,11 +394,11 @@ export const Hero = () => {
       <div className="container relative z-10 grid gap-4 px-4 pb-16 md:hidden">
         <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left backdrop-blur">
           <Users className="h-5 w-5 text-primary" />
-          <span className="text-sm text-white/80">+800 devs ativos e mentorias semanais</span>
+          <span className="text-sm text-white/80">{mobileSummary}</span>
         </div>
         <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left backdrop-blur">
           <Sparkles className="h-5 w-5 text-primary" />
-          <span className="text-sm text-white/80">Projetos reais com IA desde o primeiro dia</span>
+          <span className="text-sm text-white/80">{highlightText}</span>
         </div>
       </div>
 

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Mail, MessageCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Header } from "@/components/sections/Header";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,6 +12,7 @@ const Contato = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#060111] via-[#0b0720] to-background text-white">
       <SEO title="Contato - 4uCode" description="Fale conosco sobre mentoria, consultoria ou parcerias." />
+      <Header />
       <main className="container space-y-16 px-4 pb-16 pt-20 md:space-y-24 md:pt-28">
         <header className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="space-y-6">
