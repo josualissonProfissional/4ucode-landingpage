@@ -152,7 +152,7 @@ export const TestimonialsCarousel = () => {
               variant="outline"
               size="lg"
               className="border-primary/40 text-white transition-transform duration-300 hover:scale-105 active:scale-95"
-              onClick={() => (window.location.href = "/cadastro")}
+              onClick={() => (window.location.href = "/contato")}
             >
               Começar agora
             </Button>

@@ -89,7 +89,7 @@ export const Footer = () => {
                 asChild
                 className="group flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary via-primary-600 to-primary-700 px-8 py-5 text-sm font-semibold text-white shadow-[0_18px_38px_rgba(84,33,168,0.55)] transition md:w-max md:justify-start"
               >
-                <a href="/cadastro">
+                <a href="/contato">
                   <Flame className="h-4 w-4 transition group-hover:scale-110" />
                   Quero participar
                 </a>

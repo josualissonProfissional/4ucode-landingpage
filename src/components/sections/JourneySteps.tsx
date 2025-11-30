@@ -175,7 +175,7 @@ export const JourneySteps = () => {
               <Button
                 size="lg"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary via-primary-600 to-primary-700 px-6 py-3 text-sm font-semibold text-white transition-transform duration-300 hover:scale-105 active:scale-95"
-                onClick={() => (window.location.href = "/cadastro")}
+                onClick={() => (window.location.href = "/contato")}
               >
                 {currentStep.cta}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />

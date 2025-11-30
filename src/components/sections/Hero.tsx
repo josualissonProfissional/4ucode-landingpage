@@ -219,7 +219,7 @@ export const Hero = () => {
   };
 
   const handleStart = () => {
-    window.location.href = "/cadastro";
+    window.location.href = "/contato";
   };
 
   return (

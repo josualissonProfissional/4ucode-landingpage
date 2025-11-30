@@ -99,7 +99,7 @@ export const Trails = () => {
                 {/* CTA */}
                 <Button 
                   className="w-full gradient-primary shadow-purple group-hover:shadow-xl transition-all"
-                  onClick={() => window.location.href = "/cadastro"}
+                  onClick={() => window.location.href = "/contato"}
                 >
                   Começar esta Trilha
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

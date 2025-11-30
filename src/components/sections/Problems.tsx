@@ -285,7 +285,7 @@ export const Problems = () => {
               <Button
                 variant="outline"
                 className="w-full rounded-2xl border-primary/40 bg-primary/10 text-white hover:bg-primary hover:text-background"
-                onClick={() => document.getElementById("cadastro")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => (window.location.href = "/contato")}
               >
                 Entrar na próxima squad
                 <ArrowRight className="ml-2 h-4 w-4" />

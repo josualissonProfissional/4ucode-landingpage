@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MotionProvider } from "@/providers/motion-provider";
 
 const Index = lazy(() => import("./pages/Index"));
-const Cadastro = lazy(() => import("./pages/Cadastro"));
 const Mentoria = lazy(() => import("./pages/Mentoria"));
 const Fabrica = lazy(() => import("./pages/Fabrica"));
 const Consultoria = lazy(() => import("./pages/ConsultoriaTreinamento"));
@@ -26,7 +25,6 @@ const AppRoutes = () => (
   <Suspense fallback={<RouteFallback />}>
     <Routes>
       <Route path="/" element={<Index />} />
-      <Route path="/cadastro" element={<Cadastro />} />
       <Route path="/mentoria" element={<Mentoria />} />
       <Route path="/fabrica" element={<Fabrica />} />
       <Route path="/consultoria" element={<Consultoria />} />

@@ -56,7 +56,7 @@ export const CTA = () => {
     await new Promise((resolve) => setTimeout(resolve, 600));
     setIsSending(false);
     window.localStorage.setItem("cta_email", data.email);
-    window.location.href = "/cadastro";
+    window.location.href = "/contato";
   };
 
   return (

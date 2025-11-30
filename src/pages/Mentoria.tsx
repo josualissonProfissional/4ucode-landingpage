@@ -60,7 +60,7 @@ const Mentoria = () => {
               <Button
                 size="lg"
                 className="rounded-full bg-gradient-to-r from-primary via-primary-600 to-primary-700 text-white shadow-[0_18px_40px_rgba(78,34,164,0.55)]"
-                onClick={() => (window.location.href = "/cadastro")}
+                onClick={() => (window.location.href = "/contato")}
               >
                 Começar minha jornada
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -186,7 +186,7 @@ const Mentoria = () => {
               </div>
               <Button
                 className="rounded-full bg-gradient-to-r from-primary via-primary-600 to-primary-700 text-white shadow-[0_18px_40px_rgba(78,34,164,0.55)]"
-                onClick={() => (window.location.href = "/cadastro")}
+                onClick={() => (window.location.href = "/contato")}
               >
                 Entrar agora
               </Button>
