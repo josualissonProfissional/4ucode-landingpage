@@ -134,52 +134,49 @@ const Cadastro = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#060111] via-[#0b0720] to-background text-white">
-      <SEO 
-        title="Cadastro - 4uCode"
-        description="Cadastre-se para receber mais informa����es sobre o 4uCode"
-      />
-      <Header />
-      <div className="py-12 px-4 flex items-center justify-center" style={{ 
-        background: 'radial-gradient(1200px 600px at 20% -10%, hsl(240 10% 12%) 0%, hsl(240 10% 4%) 60%)'
-      }}>
-      <SEO 
+      <SEO
         title="Cadastro - 4uCode"
         description="Cadastre-se para receber mais informações sobre o 4uCode"
       />
-      
-      {/* Grain texture overlay */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.05]" 
-        style={{ 
-          backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")',
-          backgroundRepeat: 'repeat'
-        }} 
-      />
-      <div className="container max-w-2xl mx-auto">
-        <div className="text-center mb-8">
-          <a href="/" className="inline-flex items-center space-x-3 group mb-6">
-            <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center text-white font-bold text-xl shadow-purple group-hover:shadow-lg transition-all">
-              4u
-            </div>
-            <span className="font-display text-3xl font-bold text-white group-hover:text-primary transition-colors">
-              4uCode
-            </span>
-          </a>
-          <h1 className="text-4xl font-bold text-white mb-4">
-            Cadastre-se
-          </h1>
-          <p className="text-muted-foreground text-lg">
-            Preencha os dados abaixo e entraremos em contato
-          </p>
-        </div>
-
-      <Card data-scroll-reveal className="shadow-2xl shadow-primary/20 relative"
+      <Header />
+      <div
+        className="relative py-12 px-4 flex items-center justify-center"
+        style={{
+          background: "radial-gradient(1200px 600px at 20% -10%, hsl(240 10% 12%) 0%, hsl(240 10% 4%) 60%)",
+        }}
+      >
+        <div
+          className="fixed inset-0 pointer-events-none opacity-[0.05]"
           style={{
-            background: 'rgba(255, 255, 255, 0.06)',
-            backdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: '1.5rem'
+            backgroundImage:
+              'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")',
+            backgroundRepeat: "repeat",
           }}
-        >
+        />
+        <div className="relative container max-w-2xl mx-auto">
+          <div className="text-center mb-8">
+            <a href="/" className="inline-flex items-center space-x-3 group mb-6">
+              <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center text-white font-bold text-xl shadow-purple group-hover:shadow-lg transition-all">
+                4u
+              </div>
+              <span className="font-display text-3xl font-bold text-white group-hover:text-primary transition-colors">
+                4uCode
+              </span>
+            </a>
+            <h1 className="text-4xl font-bold text-white mb-4">Cadastre-se</h1>
+            <p className="text-muted-foreground text-lg">Preencha os dados abaixo e entraremos em contato</p>
+          </div>
+
+          <Card
+            data-scroll-reveal
+            className="shadow-2xl shadow-primary/20 relative"
+            style={{
+              background: "rgba(255, 255, 255, 0.06)",
+              backdropFilter: "blur(12px)",
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              borderRadius: "1.5rem",
+            }}
+          >
           <CardHeader>
             <CardTitle>Informações de Contato</CardTitle>
             <CardDescription>
