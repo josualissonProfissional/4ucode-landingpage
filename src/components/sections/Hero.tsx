@@ -2,9 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, BotMessageSquare, Users, ShieldCheck } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { usePersonalization } from "@/hooks/usePersonalization";
-import { floatLoop, glowPulse, hoverGlow, hoverLift, inViewUp } from "@/lib/motion-presets";
+import { floatLoop, glowPulse, hoverGlow } from "@/lib/motion-presets";
 import {
   Carousel,
   CarouselApi,
@@ -20,12 +20,6 @@ import heroBg3 from "@/assets/videos/video3.mp4";
 
 type MediaSlide = { type: "video"; src: string; poster: string; caption: string } | { type: "image"; src: string; caption: string };
 
-type StatItem = {
-  label: string;
-  value: string;
-  delay?: number;
-};
-
 type HeroSlide = {
   id: string;
   tag: string;
@@ -34,9 +28,6 @@ type HeroSlide = {
   typedText: string;
   media: MediaSlide;
   backgroundVideo: string;
-  stats: StatItem[];
-  mobileSummary: string;
-  highlight: string;
 };
 
 const heroSlidesData: HeroSlide[] = [
@@ -53,13 +44,6 @@ const heroSlidesData: HeroSlide[] = [
       caption: "Engrenagens do delivery",
     },
     backgroundVideo: heroBg1,
-    stats: [
-      { label: "+35% mais rápido", value: "ciclo de entrega", delay: 0 },
-      { label: "Squads híbridos", value: "IA + engenharia", delay: 0.3 },
-      { label: "Releases quinzenais", value: "sprints", delay: 0.6 },
-    ],
-    mobileSummary: "Squads IA + engenharia entregando releases curtos para projetos reais.",
-    highlight: "Squads guiados com QA, engenharia e copilotos 24/7.",
   },
   {
     id: "consultoria",
@@ -73,13 +57,6 @@ const heroSlidesData: HeroSlide[] = [
       caption: "Playbooks e gráficos em ação",
     },
     backgroundVideo: heroBg2,
-    stats: [
-      { label: "50+ empresas", value: "treinadas", delay: 0 },
-      { label: "98% NPS", value: "consultorias", delay: 0.3 },
-      { label: "Workshops semanais", value: "hands-on", delay: 0.6 },
-    ],
-    mobileSummary: "Consultoria aplicada com playbooks e gráficos orientando squads.",
-    highlight: "Playbooks e gráficos com especialistas orientando seu time.",
   },
   {
     id: "mentoria",
@@ -94,33 +71,16 @@ const heroSlidesData: HeroSlide[] = [
       caption: "IA guiando versões",
     },
     backgroundVideo: heroBg3,
-    stats: [
-      { label: "+800 devs ativos", value: "Mentoria AI-First", delay: 0 },
-      { label: "24/7 copiloto IA", value: "assistência", delay: 0.3 },
-      { label: "6 mentorias/semana", value: "sprints", delay: 0.6 },
-    ],
-    mobileSummary: "Mentores + IA copiloto mantendo ritmo e clareza por semana.",
-    highlight: "Copiloto IA e mentores respondendo 24/7 para você permanecer no ritmo.",
   },
 ];
 
-const StatPill = ({ label, value, delay }: { label: string; value: string; delay: number }) => (
-  <motion.div
-    className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left backdrop-blur"
-    animate={{ y: [0, -6, 0], scale: [1, 1.02, 1] }}
-    transition={{ duration: 6 + delay, repeat: Infinity, ease: "easeInOut" }}
-    whileHover={{ scale: 1.05, y: -6 }}
-    whileTap={{ scale: 0.97 }}
-  >
-    <div className="text-lg font-semibold text-white">{value}</div>
-    <p className="text-xs uppercase tracking-[0.3em] text-white/60">{label}</p>
-  </motion.div>
-);
-
-const ScrollIndicator = ({ onClick }: { onClick: () => void }) => (
+const ScrollIndicator = ({ onClick, className }: { onClick: () => void; className?: string }) => (
   <motion.button
     onClick={onClick}
-    className="group absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-white/70 transition md:flex"
+    className={cn(
+      "group flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-white/70 transition",
+      className,
+    )}
     aria-label="Descer para próxima seção"
     animate={{ y: [0, -10, 0] }}
     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -184,15 +144,21 @@ export const Hero = () => {
   const glowOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.4]);
   const [heroApi, setHeroApi] = useState<CarouselApi>();
   const [activeSlide, setActiveSlide] = useState(0);
+  const PROGRESS_DURATION = 8;
   const heroPlugins = useMemo(
     () => [
       Autoplay({
-        delay: 8000,
+        delay: PROGRESS_DURATION * 1000,
         stopOnInteraction: false,
       }),
     ],
     [],
   );
+
+  const [progressKey, setProgressKey] = useState(0);
+  const slideFloatMotion = floatLoop(1, 5);
+  const headingFloatMotion = floatLoop(1, 5);
+  const buttonFloatMotion = floatLoop(1, 5);
 
   useEffect(() => {
     if (!heroApi) return;
@@ -204,15 +170,16 @@ export const Hero = () => {
     };
   }, [heroApi]);
 
+  useEffect(() => {
+    setProgressKey((prev) => prev + 1);
+  }, [activeSlide]);
+
   const slides = heroSlidesData.map((slide) =>
     slide.id === "mentoria"
       ? { ...slide, headline: headline || slide.headline, description: subheadline || slide.description }
       : slide,
   );
   const activeBackground = slides[activeSlide]?.backgroundVideo ?? heroBg1;
-  const activeStats = slides[activeSlide]?.stats ?? [];
-  const highlightText = slides[activeSlide]?.highlight ?? "Chat IA disponível 24/7 para tirar dúvidas e guiar seus estudos.";
-  const mobileSummary = slides[activeSlide]?.mobileSummary ?? "+800 devs ativos e mentorias semanais";
 
   const handleScrollToJourney = () => {
     document.getElementById("jornada")?.scrollIntoView({ behavior: "smooth" });
@@ -226,7 +193,7 @@ export const Hero = () => {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative flex min-h-[92vh] w-full flex-col overflow-hidden bg-gradient-to-b from-[#060111] via-[#050313] to-background pt-20 text-white sm:pt-24"
+      className="relative flex h-screen w-full flex-col overflow-hidden bg-gradient-to-b from-[#060111] via-[#050313] to-background pt-16 text-white sm:pt-20"
     >
       <div className="pointer-events-none absolute inset-0">
         <AnimatePresence mode="wait">
@@ -253,12 +220,13 @@ export const Hero = () => {
         style={{ opacity: glowOpacity }}
       />
 
-      <div className="container relative z-10 flex-1 px-4 pb-12">
+      <div className="container relative z-10 flex h-full flex-1 flex-col items-start justify-start px-4">
         <Carousel setApi={setHeroApi} plugins={heroPlugins} className="w-full">
           <CarouselContent>
             {slides.map((slide, index) => (
               <CarouselItem key={slide.id}>
-                <motion.div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center" initial={{ opacity: 0.9 }} animate={{ opacity: 1 }}>
+                <motion.div {...slideFloatMotion} className="relative">
+                  <motion.div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center" initial={{ opacity: 0.9 }} animate={{ opacity: 1 }}>
                   <div className="space-y-6">
                     <motion.div
                       className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.4em] text-white/70"
@@ -276,23 +244,25 @@ export const Hero = () => {
                         exit={{ opacity: 0, y: -24, filter: "blur(8px)" }}
                         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                       >
-                        <motion.h1
-                          className="font-display text-4xl leading-[1.1] sm:text-5xl lg:text-6xl"
-                          initial={{ opacity: 0, y: 18 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.5, delay: 0.05 }}
-                        >
-                          {slide.headline}
-                        </motion.h1>
-                        <motion.p
-                          className="text-base text-white/75 sm:text-lg"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.45, delay: 0.12 }}
-                        >
-                          {slide.description}
-                        </motion.p>
-                        <TypewriterLine text={slide.typedText} active={activeSlide === index} />
+                        <motion.div {...headingFloatMotion}>
+                          <motion.h1
+                            className="font-display text-4xl leading-[1.1] sm:text-5xl lg:text-6xl"
+                            initial={{ opacity: 0, y: 18 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.05 }}
+                          >
+                            {slide.headline}
+                          </motion.h1>
+                          <motion.p
+                            className="text-base text-white/75 sm:text-lg"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.45, delay: 0.12 }}
+                          >
+                            {slide.description}
+                          </motion.p>
+                          <TypewriterLine text={slide.typedText} active={activeSlide === index} />
+                        </motion.div>
                       </motion.div>
                     </AnimatePresence>
 
@@ -305,49 +275,20 @@ export const Hero = () => {
                         exit={{ opacity: 0, y: -15 }}
                         transition={{ duration: 0.45, delay: 0.1 }}
                       >
-                        <motion.div {...hoverGlow} className="w-full sm:w-auto">
-                          <Button
-                            size="lg"
-                            onClick={handleStart}
-                            className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary via-primary-600 to-primary-700 px-8 py-4 text-base font-semibold text-white shadow-[0_18px_45px_rgba(78,34,164,0.55)] transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:w-auto"
-                        >
-                          {ctaLabel}
-                          <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                        </Button>
-                      </motion.div>
-                      <motion.button
-                        onClick={handleScrollToJourney}
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-4 text-sm font-semibold text-white/80 backdrop-blur transition hover:border-white/40 sm:w-auto"
-                        {...hoverLift}
-                      >
-                          <ShieldCheck className="h-4 w-4 text-primary" />
-                          Ver como funciona
-                        </motion.button>
+                        <motion.div {...buttonFloatMotion} className="w-full sm:w-auto">
+                          <motion.div {...hoverGlow} className="w-full">
+                            <Button
+                              size="lg"
+                              onClick={handleStart}
+                              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary via-primary-600 to-primary-700 px-8 py-4 text-base font-semibold text-white shadow-[0_18px_45px_rgba(78,34,164,0.55)] transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:w-auto"
+                            >
+                              {ctaLabel}
+                              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                            </Button>
+                          </motion.div>
+                        </motion.div>
                       </motion.div>
                     </AnimatePresence>
-
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      {activeStats.map((pill, pillIndex) => (
-                        <motion.div
-                          key={`${slide.id}-pill-${pill.label}`}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.4, delay: 0.1 * pillIndex }}
-                        >
-                          <StatPill label={pill.label} value={pill.value} delay={pill.delay ?? pillIndex * 0.18} />
-                        </motion.div>
-                      ))}
-                      <motion.div
-                        className="flex items-center gap-3 rounded-2xl border border-white/10 bg-gradient-to-r from-primary/10 to-transparent px-4 py-3 text-sm text-white/80"
-                        {...hoverLift}
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.3 }}
-                      >
-                        <BotMessageSquare className="h-5 w-5 text-primary" />
-                        {highlightText}
-                      </motion.div>
-                    </div>
                   </div>
 
                   <AnimatePresence mode="wait">
@@ -364,16 +305,30 @@ export const Hero = () => {
                       {renderMedia(slide.media)}
                     </motion.div>
                   </AnimatePresence>
+                  </motion.div>
                 </motion.div>
               </CarouselItem>
             ))}
           </CarouselContent>
 
-            <div className="mt-8 flex flex-col items-center gap-4">
-              <div className="flex items-center gap-2">
-                {slides.map((slide, index) => (
-                  <button
-                    key={slide.id}
+          <div className="absolute left-1/2 top-[60%] z-20 flex w-full max-w-[320px] -translate-x-1/2 flex-col items-center gap-4 px-4 sm:px-6 md:left-1/2 md:top-[40%] lg:top-[94%] md:px-0 sm:top-[50%]">
+            <div className="flex w-full flex-col items-center gap-2">
+              <div className="w-full max-w-[220px] rounded-full bg-white/15 px-0.5 py-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+                <div className="overflow-hidden rounded-full bg-white/10">
+                  <motion.div
+                    key={progressKey}
+                    initial={{ width: "0%" }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: PROGRESS_DURATION, ease: "linear", repeat: 0 }}
+                    className="h-1.5 rounded-full bg-gradient-to-r from-fuchsia-400 via-primary to-purple-500"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              {slides.map((slide, index) => (
+                <button
+                  key={slide.id}
                   type="button"
                   onClick={() => heroApi?.scrollTo(index)}
                   className={cn(
@@ -387,22 +342,10 @@ export const Hero = () => {
               <CarouselPrevious className="relative h-10 w-10 rounded-full border border-white/20 bg-white/10 text-white hover:bg-primary hover:text-background" />
               <CarouselNext className="relative h-10 w-10 rounded-full border border-white/20 bg-white/10 text-white hover:bg-primary hover:text-background" />
             </div>
+            <ScrollIndicator onClick={handleScrollToJourney} className="mt-3" />
           </div>
         </Carousel>
       </div>
-
-      <div className="container relative z-10 grid gap-4 px-4 pb-16 md:hidden">
-        <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left backdrop-blur">
-          <Users className="h-5 w-5 text-primary" />
-          <span className="text-sm text-white/80">{mobileSummary}</span>
-        </div>
-        <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left backdrop-blur">
-          <Sparkles className="h-5 w-5 text-primary" />
-          <span className="text-sm text-white/80">{highlightText}</span>
-        </div>
-      </div>
-
-      <ScrollIndicator onClick={handleScrollToJourney} />
     </section>
   );
 };
